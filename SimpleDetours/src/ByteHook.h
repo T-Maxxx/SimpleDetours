@@ -17,5 +17,5 @@ namespace SimpleDetours
 		MultiPointer place;
 		byte replace;
 		byte original;
-	}
+	};
 }

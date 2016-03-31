@@ -19,5 +19,5 @@ namespace SimpleDetours
 		MultiPointer place;
 		MultiPointer memory;
 		dword memorySize;
-	}
+	};
 }

@@ -24,10 +24,10 @@ SimpleDetours::MemoryHook::MemoryHook(MultiPointer to, MultiPointer from, dword 
 SimpleDetours::MemoryHook::~MemoryHook()
 {
 	removeHook();
-	delete[] memory;
+	delete[] memory.vp();
 }
 
-SimpleDetours::MemoryHook::setupHook()
+void SimpleDetours::MemoryHook::setupHook()
 {
 	if(isDeployed)
 		return;
@@ -39,18 +39,18 @@ SimpleDetours::MemoryHook::setupHook()
 	isDeployed = true;
 }
 
-SimpleDetours::MemoryHook::removeHook()
+void SimpleDetours::MemoryHook::removeHook()
 {
 	if(!isDeployed)
 		return;
 		
 	setMemory(place, originalBytes, originalBytesSize);
-	delete[] originalBytes;
+	delete[] originalBytes.vp();
 	originalBytesSize = 0;
 	isDeployed = false;
 }
 
-SimpleDetours::MemoryHook::version()
+dword SimpleDetours::MemoryHook::version()
 {
 	return static_cast<dword>(MEMORYHOOK_VERSION);
 }
