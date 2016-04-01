@@ -15,12 +15,12 @@ namespace SimpleDetours
 		MultiPointer(dword* dp);
 		MultiPointer(char*  s);
 
-		inline dword   d();
-		inline ptr    vp();
-		inline byte*  bp();
-		inline word*  wp();
-		inline dword* dp();
-		inline char*   s();
+		dword   d();
+		ptr    vp();
+		byte*  bp();
+		word*  wp();
+		dword* dp();
+		char*   s();
 
 		MultiPointer operator+(const dword& rv);
 		MultiPointer operator-(MultiPointer& rv);

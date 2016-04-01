@@ -1,5 +1,9 @@
 #pragma once
-#include "AllHooks.h"
+#include "ByteHook.h"
+#include "WordHook.h"
+#include "DwordHook.h"
+#include "MemoryHook.h"
+#include "Detour.h"
 #include <stack>
 #include <string>
 
@@ -11,11 +15,11 @@ namespace SimpleDetours
 		HookHandler();
 		~HookHandler();
 
-		inline void addByteHook(MultiPointer place, byte b);
-		inline void addWordHook(MultiPointer place, word w);
-		inline void addDwordHook(MultiPointer place, dword d);
-		inline void addMemoryHook(MultiPointer place, MultiPointer memory, dword memSize);
-		inline void addDetour(MultiPointer place, MultiPointer retAddr, MultiPointer detour, std::string args);
+		void addByteHook(MultiPointer place, byte b);
+		void addWordHook(MultiPointer place, word w);
+		void addDwordHook(MultiPointer place, dword d);
+		void addMemoryHook(MultiPointer place, MultiPointer memory, dword memSize);
+		void addDetour(MultiPointer place, MultiPointer retAddr, MultiPointer detour, std::string args);
 
 	private:
 		std::stack<ByteHook*>*   stByteHooks;

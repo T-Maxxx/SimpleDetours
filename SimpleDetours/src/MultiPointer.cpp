@@ -41,32 +41,32 @@ SimpleDetours::MultiPointer::MultiPointer(char* s)
 	pointer = reinterpret_cast<dword>(s);
 }
 
-inline dword SimpleDetours::MultiPointer::d()
+dword SimpleDetours::MultiPointer::d()
 {
 	return pointer;
 }
 
-inline ptr SimpleDetours::MultiPointer::vp()
+ptr SimpleDetours::MultiPointer::vp()
 {
 	return reinterpret_cast<ptr>(pointer);
 }
 
-inline byte* SimpleDetours::MultiPointer::bp()
+byte* SimpleDetours::MultiPointer::bp()
 {
 	return reinterpret_cast<byte*>(pointer);
 }
 
-inline word* SimpleDetours::MultiPointer::wp()
+word* SimpleDetours::MultiPointer::wp()
 {
 	return reinterpret_cast<word*>(pointer);
 }
 
-inline dword* SimpleDetours::MultiPointer::dp()
+dword* SimpleDetours::MultiPointer::dp()
 {
 	return reinterpret_cast<dword*>(pointer);
 }
 
-inline char* SimpleDetours::MultiPointer::s()
+char* SimpleDetours::MultiPointer::s()
 {
 	return reinterpret_cast<char*>(pointer);
 }

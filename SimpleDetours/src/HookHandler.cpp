@@ -50,27 +50,27 @@ SimpleDetours::HookHandler::~HookHandler()
 	delete stDetours;
 }
 
-inline void SimpleDetours::HookHandler::addByteHook(MultiPointer place, byte b)
+void SimpleDetours::HookHandler::addByteHook(MultiPointer place, byte b)
 {
 	stByteHooks->push(new ByteHook(place, b));
 }
 
-inline void SimpleDetours::HookHandler::addWordHook(MultiPointer place, word w)
+void SimpleDetours::HookHandler::addWordHook(MultiPointer place, word w)
 {
 	stWordHooks->push(new WordHook(place, w));
 }
 
-inline void SimpleDetours::HookHandler::addDwordHook(MultiPointer place, dword d)
+void SimpleDetours::HookHandler::addDwordHook(MultiPointer place, dword d)
 {
 	stDwordHooks->push(new DwordHook(place, d));
 }
 
-inline void SimpleDetours::HookHandler::addMemoryHook(MultiPointer place, MultiPointer memory, dword memSize)
+void SimpleDetours::HookHandler::addMemoryHook(MultiPointer place, MultiPointer memory, dword memSize)
 {
 	stMemoryHooks->push(new MemoryHook(place, memory, memSize));
 }
 
-inline void SimpleDetours::HookHandler::addDetour(MultiPointer place, MultiPointer retAddr, MultiPointer detour, std::string args)
+void SimpleDetours::HookHandler::addDetour(MultiPointer place, MultiPointer retAddr, MultiPointer detour, std::string args)
 {
 	stDetours->push(new Detour(place, retAddr, detour, args));
 }
