@@ -13,9 +13,9 @@ SimpleDetours::Detour::Detour()
 	arguments = "";
 }
 
-SimpleDetours::Detour::Detour(MultiPointer address, dword size, MultiPointer hookAddress, std::string pushArguments) : Detour()
+SimpleDetours::Detour::Detour(MultiPointer address, MultiPointer returnAddress, MultiPointer hookAddress, std::string pushArguments) : Detour()
 {
-	initialize(address, size, hookAddress, pushArguments);
+	initialize(address, returnAddress, hookAddress, pushArguments);
 	setupHook();
 }
 
@@ -27,13 +27,14 @@ SimpleDetours::Detour::~Detour()
 	VirtualFree(detourCode.vp(), detourCodeSize, MEM_RELEASE);
 }
 
-void SimpleDetours::Detour::initialize(MultiPointer address, dword size, MultiPointer hookAddress, std::string pushArguments)
+void SimpleDetours::Detour::initialize(MultiPointer address, MultiPointer returnAddress, MultiPointer hookAddress, std::string pushArguments)
 {
 	if (isInitialized)
 		return;
 
 	place = address;
-	originalBytesSize = size;
+	retAddr = returnAddress;
+	originalBytesSize = (retAddr - place).d();
 	targetAddress = hookAddress;
 	arguments = pushArguments;
 
@@ -70,7 +71,7 @@ void SimpleDetours::Detour::initialize(MultiPointer address, dword size, MultiPo
 	memcpy_s((detourCode + j).vp(), detourCodeSize - j, originalBytes.vp(), originalBytesSize); //execute original bytes
 	j += originalBytesSize;
 	putOpcode_byte(detourCode, j, OP_PUSH_M32);                            // push	
-	putOpcode_dword(detourCode, j, place.d() + originalBytesSize);         //       <return address>
+	putOpcode_dword(detourCode, j, retAddr.d());         //       <return address>
 	putOpcode_byte(detourCode, j, OP_RET);                                 // ret
 
 	if (args)
