@@ -4,3 +4,4 @@
 #include "DwordHook.h"
 #include "MemoryHook.h"
 #include "Detour.h"
+#include "HookHandler.h"

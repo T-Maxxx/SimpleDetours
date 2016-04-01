@@ -71,7 +71,7 @@ void SimpleDetours::Detour::initialize(MultiPointer address, MultiPointer return
 	memcpy_s((detourCode + j).vp(), detourCodeSize - j, originalBytes.vp(), originalBytesSize); //execute original bytes
 	j += originalBytesSize;
 	putOpcode_byte(detourCode, j, OP_PUSH_M32);                            // push	
-	putOpcode_dword(detourCode, j, retAddr.d());         //       <return address>
+	putOpcode_dword(detourCode, j, retAddr.d());                           //      <return address>
 	putOpcode_byte(detourCode, j, OP_RET);                                 // ret
 
 	if (args)

@@ -39,6 +39,9 @@
     <ClCompile Include="src\WordHook.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\HookHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ByteHook.h">
@@ -65,7 +68,10 @@
     <ClInclude Include="src\WordHook.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\All.h">
+    <ClInclude Include="src\HookHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AllHooks.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

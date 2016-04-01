@@ -138,6 +138,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\HookHandler.cpp" />
     <ClCompile Include="src\ByteHook.cpp" />
     <ClCompile Include="src\Detour.cpp" />
     <ClCompile Include="src\DwordHook.cpp" />
@@ -147,7 +148,8 @@
     <ClCompile Include="src\WordHook.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\All.h" />
+    <ClInclude Include="src\HookHandler.h" />
+    <ClInclude Include="src\AllHooks.h" />
     <ClInclude Include="src\ByteHook.h" />
     <ClInclude Include="src\Declarations.h" />
     <ClInclude Include="src\Detour.h" />
