@@ -15,6 +15,7 @@ namespace SimpleDetours
 
 	protected:
 		bool isDeployed;
+		bool isInitialized;
 		//Application memory
 		static byte   setByte(MultiPointer address, byte b);
 		static word   setWord(MultiPointer address, word w);

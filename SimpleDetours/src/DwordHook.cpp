@@ -10,10 +10,7 @@ SimpleDetours::DwordHook::DwordHook()
 
 SimpleDetours::DwordHook::DwordHook(MultiPointer to, dword d) : DwordHook()
 {
-	place = to;
-	original = *(place.dp());
-	replace = d;
-	
+	initialize(to, d);
 	setupHook();
 }
 
@@ -22,9 +19,20 @@ SimpleDetours::DwordHook::~DwordHook()
 	removeHook();
 }
 
+void SimpleDetours::DwordHook::initialize(MultiPointer to, dword d)
+{
+	if (isInitialized)
+		return;
+
+	place = to;
+	original = *(place.dp());
+	replace = d;
+	isInitialized = true;
+}
+
 void SimpleDetours::DwordHook::setupHook()
 {
-	if(isDeployed)
+	if(isDeployed || !isInitialized)
 		return;
 		
 	setDword(place, replace);
@@ -33,11 +41,11 @@ void SimpleDetours::DwordHook::setupHook()
 
 void SimpleDetours::DwordHook::removeHook()
 {
-	if(!isDeployed)
+	if(!isDeployed || !isInitialized)
 		return;
 		
-		setDword(place, original);
-		isDeployed = false;
+	setDword(place, original);
+	isDeployed = false;
 }
 
 dword SimpleDetours::DwordHook::version()

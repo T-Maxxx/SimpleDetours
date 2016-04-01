@@ -1,5 +1,4 @@
 #include "MemoryHook.h"
-
 using namespace SimpleDetours;
 
 SimpleDetours::MemoryHook::MemoryHook()
@@ -13,11 +12,7 @@ SimpleDetours::MemoryHook::MemoryHook()
 
 SimpleDetours::MemoryHook::MemoryHook(MultiPointer to, MultiPointer from, dword size) : MemoryHook()
 {
-	place = to;
-	memory = new byte[size]();
-	memorySize = size;
-	putMemory(memory, from, size);
-	
+	initialize(to, from, size);
 	setupHook();
 }
 
@@ -25,28 +20,42 @@ SimpleDetours::MemoryHook::~MemoryHook()
 {
 	removeHook();
 	delete[] memory.vp();
+	delete[] originalBytes.vp();
+}
+
+void SimpleDetours::MemoryHook::initialize(MultiPointer to, MultiPointer from, dword size)
+{
+	if (isInitialized)
+		return;
+
+	place = to;
+
+	memorySize = size;
+	memory = new byte[size]();
+	putMemory(memory, from, size);
+
+	originalBytesSize = size;
+	originalBytes = new byte[size]();
+	putMemory(originalBytes, place, originalBytesSize);
+
+	isInitialized = true;
 }
 
 void SimpleDetours::MemoryHook::setupHook()
 {
-	if(isDeployed)
+	if(isDeployed || !isInitialized)
 		return;
-		
-	originalBytesSize = memorySize;
-	originalBytes = new byte[originalBytesSize]();
-	putMemory(originalBytes, place, originalBytesSize);
+	
 	setMemory(place, memory, memorySize);
 	isDeployed = true;
 }
 
 void SimpleDetours::MemoryHook::removeHook()
 {
-	if(!isDeployed)
+	if(!isDeployed || !isInitialized)
 		return;
 		
 	setMemory(place, originalBytes, originalBytesSize);
-	delete[] originalBytes.vp();
-	originalBytesSize = 0;
 	isDeployed = false;
 }
 

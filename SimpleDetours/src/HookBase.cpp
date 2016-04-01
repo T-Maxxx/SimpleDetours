@@ -1,6 +1,12 @@
 #include "HookBase.h"
 using namespace SimpleDetours;
 
+SimpleDetours::HookBase::HookBase()
+{
+	isDeployed = false;
+	isInitialized = false;
+}
+
 dword SimpleDetours::HookBase::protectAddress(MultiPointer address, dword size, dword flags)
 {
 	dword oldFlags = NULL;
@@ -9,11 +15,6 @@ dword SimpleDetours::HookBase::protectAddress(MultiPointer address, dword size, 
 		ExitProcess(1);
 
 	return oldFlags;
-}
-
-SimpleDetours::HookBase::HookBase()
-{
-	isDeployed = false;
 }
 
 SimpleDetours::byte SimpleDetours::HookBase::setByte(MultiPointer address, byte b)

@@ -9,6 +9,8 @@ namespace SimpleDetours
 		MemoryHook();
 		MemoryHook(MultiPointer to, MultiPointer from, dword size);
 		~MemoryHook();
+
+		void initialize(MultiPointer to, MultiPointer from, dword size);
 		void setupHook();
 		void removeHook();
 		dword version();

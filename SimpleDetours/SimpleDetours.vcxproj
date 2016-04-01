@@ -147,6 +147,7 @@
     <ClCompile Include="src\WordHook.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\All.h" />
     <ClInclude Include="src\ByteHook.h" />
     <ClInclude Include="src\Declarations.h" />
     <ClInclude Include="src\Detour.h" />

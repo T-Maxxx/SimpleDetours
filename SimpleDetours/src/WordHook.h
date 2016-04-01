@@ -10,6 +10,7 @@ namespace SimpleDetours
 		WordHook(MultiPointer to, word w);
 		~WordHook();
 		
+		void initialize(MultiPointer to, word w);
 		void setupHook();
 		void removeHook();
 		dword version();

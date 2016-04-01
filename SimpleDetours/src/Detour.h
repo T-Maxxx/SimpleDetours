@@ -31,9 +31,10 @@ namespace SimpleDetours
 	{
 	public:
 		Detour();
-		Detour(MultiPointer address, dword size, MultiPointer hookAddress, std::string& pushArguments);
+		Detour(MultiPointer address, dword size, MultiPointer hookAddress, std::string pushArguments);
 		~Detour();
 
+		void initialize(MultiPointer address, dword size, MultiPointer hookAddress, std::string pushArguments);
 		void setupHook();
 		void removeHook();
 		dword version();

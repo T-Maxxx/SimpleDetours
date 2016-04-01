@@ -2,11 +2,41 @@
 using namespace SimpleDetours;
 using namespace std;
 
-void SimpleDetours::Detour::setupHook()
+SimpleDetours::Detour::Detour()
 {
-	if(isDeployed)
+	place = NULL;
+	originalBytes = NULL;
+	originalBytesSize = 0;
+	targetAddress = NULL;
+	detourCode = NULL;
+	detourCodeSize = 0;
+	arguments = "";
+}
+
+SimpleDetours::Detour::Detour(MultiPointer address, dword size, MultiPointer hookAddress, std::string pushArguments) : Detour()
+{
+	initialize(address, size, hookAddress, pushArguments);
+	setupHook();
+}
+
+SimpleDetours::Detour::~Detour()
+{
+	removeHook();
+
+	delete[] originalBytes.vp();
+	VirtualFree(detourCode.vp(), detourCodeSize, MEM_RELEASE);
+}
+
+void SimpleDetours::Detour::initialize(MultiPointer address, dword size, MultiPointer hookAddress, std::string pushArguments)
+{
+	if (isInitialized)
 		return;
-	
+
+	place = address;
+	originalBytesSize = size;
+	targetAddress = hookAddress;
+	arguments = pushArguments;
+
 	originalBytes = new byte[originalBytesSize]();
 	putMemory(originalBytes, place, originalBytesSize);
 
@@ -14,7 +44,7 @@ void SimpleDetours::Detour::setupHook()
 	byte* args = NULL;
 	if (arguments != "")
 	{
-		argsCount = argsCountBytes(',');
+		argsCount = argsCountBytes(',') + 1;
 		if (argsCount != 0)
 		{
 			args = new byte[argsCount];
@@ -30,7 +60,7 @@ void SimpleDetours::Detour::setupHook()
 
 	putOpcode_byte(detourCode, j, OP_PUSHAD);                              // pushad
 	putOpcode_byte(detourCode, j, OP_PUSHFD);                              // pushfd
-	for (dword i = 0; i < argsCount; ++i)                                  // push <REGISTER>
+	for (dword i = 0; i < argsCount; ++i)                                  // push <REGISTERS>
 		putOpcode_byte(detourCode, j, args[i]);
 	putOpcode_byte(detourCode, j, OP_MOV_EAX_M32);                         // mov eax, 
 	putOpcode_dword(detourCode, j, targetAddress.d());                     //          hookAddress
@@ -43,59 +73,42 @@ void SimpleDetours::Detour::setupHook()
 	putOpcode_dword(detourCode, j, place.d() + originalBytesSize);         //       <return address>
 	putOpcode_byte(detourCode, j, OP_RET);                                 // ret
 
-	if (j != detourCodeSize)
-		/*BREAKPOINT*/;
-
-	setByte(place, OP_JMP);
-	setDword(place + 1, (detourCode - place).d() + 5); //TODO: check if -5
-
 	if (args)
 		delete[] args;
+
+	if (j != detourCodeSize)
+	{
+		VirtualFree(detourCode.vp(), detourCodeSize, MEM_RELEASE);
+		return;
+	}
+
+	isInitialized = true;
+}
+
+void SimpleDetours::Detour::setupHook()
+{
+	if(isDeployed || !isInitialized)
+		return;
+	
+	setByte(place, OP_JMP);
+	setDword(place + 1, (detourCode - place).d() + 5); //TODO: check if -5
 		
-		isDeployed = true;
+	isDeployed = true;
 }
 
 void SimpleDetours::Detour::removeHook()
 {
-	if(!isDeployed)
+	if (!isDeployed || !isInitialized)
 		return;
 		
 	setMemory(place, originalBytes, originalBytesSize);
-	delete[] originalBytes.vp();
-	VirtualFree(detourCode.vp(), detourCodeSize, MEM_RELEASE);
-	
+		
 	isDeployed = false;
 }
 
 dword SimpleDetours::Detour::version()
 {
 	return static_cast<dword>(DETOUR_VERSION);
-}
-
-SimpleDetours::Detour::Detour()
-{
-	place = NULL;
-	originalBytes = NULL;
-	originalBytesSize = 0;
-	targetAddress = NULL;
-	detourCode = NULL;
-	detourCodeSize = 0;
-	arguments = "";
-}
-
-SimpleDetours::Detour::Detour(MultiPointer address, dword size, MultiPointer hookAddress, std::string& pushArguments) : Detour()
-{
-	place = address;
-	originalBytesSize = size;
-	targetAddress = hookAddress;
-	arguments = pushArguments;
-
-	setupHook();
-}
-
-SimpleDetours::Detour::~Detour()
-{
-	removeHook();
 }
 
 dword SimpleDetours::Detour::argsCountBytes(byte b)
@@ -133,7 +146,7 @@ void SimpleDetours::Detour::argsParse(byte* arr, dword count)
 		}
 
 		if (idx != count)
-			;//TODO: error
+			removeHook();//TODO: test it
 	}
 }
 

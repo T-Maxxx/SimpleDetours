@@ -10,6 +10,7 @@ namespace SimpleDetours
 		ByteHook(MultiPointer to, byte b);
 		~ByteHook();
 		
+		void initialize(MultiPointer to, byte b);
 		void setupHook();
 		void removeHook();
 		dword version();

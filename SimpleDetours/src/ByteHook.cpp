@@ -1,5 +1,4 @@
 #include "ByteHook.h"
-
 using namespace SimpleDetours;
 
 SimpleDetours::ByteHook::ByteHook()
@@ -11,9 +10,8 @@ SimpleDetours::ByteHook::ByteHook()
 
 SimpleDetours::ByteHook::ByteHook(MultiPointer to, byte b) : ByteHook()
 {
-	place = to;
-	original = *(place.bp());
-	replace = b;
+	initialize(to, b);
+	setupHook();
 }
 
 SimpleDetours::ByteHook::~ByteHook()
@@ -21,9 +19,21 @@ SimpleDetours::ByteHook::~ByteHook()
 	removeHook();
 }
 
+void SimpleDetours::ByteHook::initialize(MultiPointer to, byte b)
+{
+	if (isInitialized)
+		return;
+
+	place = to;
+	original = *(place.bp());
+	replace = b;
+
+	isInitialized = true;
+}
+
 void SimpleDetours::ByteHook::setupHook()
 {
-	if(isDeployed)
+	if(isDeployed || !isInitialized)
 		return;
 		
 	setByte(place, replace);
@@ -32,7 +42,7 @@ void SimpleDetours::ByteHook::setupHook()
 
 void SimpleDetours::ByteHook::removeHook()
 {
-	if(!isDeployed)
+	if(!isDeployed || !isInitialized)
 		return;
 		
 	setByte(place, original);
@@ -43,4 +53,3 @@ dword SimpleDetours::ByteHook::version()
 {
 	return static_cast<dword>(BYTEHOOK_VERSION);
 }
-
