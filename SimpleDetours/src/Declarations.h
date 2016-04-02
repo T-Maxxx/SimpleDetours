@@ -5,6 +5,12 @@
 #define WORDHOOK_VERSION 1
 #define DWORDHOOK_VERSION 1
 
+#ifdef SIMPLEDETOURS_DLL
+#define SIMPLEDETOURS_API _declspec(dllimport)
+#else
+#define SIMPLEDETOURS_API _declspec(dllexport)
+#endif
+
 namespace SimpleDetours
 {
 	typedef unsigned char      byte;

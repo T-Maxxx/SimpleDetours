@@ -3,7 +3,7 @@
 
 namespace SimpleDetours
 {
-	class MemoryHook : public HookBase
+	class SIMPLEDETOURS_API MemoryHook : public HookBase
 	{
 	public:
 		MemoryHook();

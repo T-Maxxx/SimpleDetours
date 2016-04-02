@@ -3,7 +3,7 @@
 
 namespace SimpleDetours
 {
-	class DwordHook : public HookBase
+	class SIMPLEDETOURS_API DwordHook : public HookBase
 	{
 	public:
 		DwordHook();

@@ -3,7 +3,7 @@
 
 namespace SimpleDetours
 {
-	class ByteHook : public HookBase
+	class SIMPLEDETOURS_API ByteHook : public HookBase
 	{
 	public:
 		ByteHook();

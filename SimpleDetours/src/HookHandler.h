@@ -9,7 +9,7 @@
 
 namespace SimpleDetours
 {
-	class HookHandler
+	class SIMPLEDETOURS_API HookHandler
 	{
 	public:
 		HookHandler();

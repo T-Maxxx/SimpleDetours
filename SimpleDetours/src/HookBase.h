@@ -4,7 +4,7 @@
 
 namespace SimpleDetours
 {
-	class HookBase
+	class SIMPLEDETOURS_API HookBase
 	{
 	public:
 		HookBase();

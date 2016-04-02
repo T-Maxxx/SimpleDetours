@@ -54,7 +54,7 @@ void SimpleDetours::Detour::initialize(MultiPointer address, MultiPointer return
 	}
 
 	//calculate detour code size
-	detourCodeSize = 20 + originalBytesSize + argsCount;
+	detourCodeSize = 17 + originalBytesSize + argsCount;
 	detourCode = VirtualAlloc(NULL, detourCodeSize, MEM_COMMIT, PAGE_EXECUTE_READWRITE); //TODO: check flags
 
 	dword j = 0;
@@ -92,7 +92,7 @@ void SimpleDetours::Detour::setupHook()
 		return;
 	
 	setByte(place, OP_JMP);
-	setDword(place + 1, (detourCode - place).d() + 5); //TODO: check if -5
+	setDword(place + 1, (detourCode - place).d() - 5);
 		
 	isDeployed = true;
 }

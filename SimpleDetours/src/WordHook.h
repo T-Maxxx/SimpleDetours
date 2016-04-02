@@ -3,7 +3,7 @@
 
 namespace SimpleDetours
 {
-	class WordHook: public HookBase
+	class SIMPLEDETOURS_API WordHook: public HookBase
 	{
 	public:
 		WordHook();

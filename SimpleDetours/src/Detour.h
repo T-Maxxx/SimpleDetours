@@ -27,7 +27,7 @@ namespace SimpleDetours
 		OP_CALL_EAX = 0xD0FF
 	};
 
-	class Detour : public HookBase
+	class SIMPLEDETOURS_API Detour : public HookBase
 	{
 	public:
 		Detour();

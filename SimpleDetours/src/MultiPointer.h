@@ -3,7 +3,7 @@
 
 namespace SimpleDetours
 {
-	class MultiPointer
+	class SIMPLEDETOURS_API MultiPointer
 	{
 	public:
 		MultiPointer();
