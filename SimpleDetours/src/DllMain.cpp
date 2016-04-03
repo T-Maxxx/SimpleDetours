@@ -1,6 +1,5 @@
 #include <Windows.h>
-#define SIMPLEDETOURS_DLL true
-#include "Declarations.h"
+#include "SimpleDetours.h"
 
 BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
 {

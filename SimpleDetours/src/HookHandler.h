@@ -1,9 +1,5 @@
 #pragma once
-#include "ByteHook.h"
-#include "WordHook.h"
-#include "DwordHook.h"
-#include "MemoryHook.h"
-#include "Detour.h"
+#include "AllHeaders.h"
 #include <stack>
 #include <string>
 
@@ -19,7 +15,7 @@ namespace SimpleDetours
 		void addWordHook(MultiPointer place, word w);
 		void addDwordHook(MultiPointer place, dword d);
 		void addMemoryHook(MultiPointer place, MultiPointer memory, dword memSize);
-		void addDetour(MultiPointer place, MultiPointer retAddr, MultiPointer detour, std::string args);
+		void addDetour(MultiPointer place, MultiPointer retAddr, MultiPointer detour, str args);
 
 	private:
 		std::stack<ByteHook*>*   stByteHooks;

@@ -52,7 +52,7 @@ SimpleDetours::HookHandler::~HookHandler()
 
 void SimpleDetours::HookHandler::addByteHook(MultiPointer place, byte b)
 {
-	stByteHooks->push(new ByteHook(place, b));
+//	stByteHooks->push(new ByteHook(place, b));
 }
 
 void SimpleDetours::HookHandler::addWordHook(MultiPointer place, word w)
@@ -70,7 +70,7 @@ void SimpleDetours::HookHandler::addMemoryHook(MultiPointer place, MultiPointer 
 	stMemoryHooks->push(new MemoryHook(place, memory, memSize));
 }
 
-void SimpleDetours::HookHandler::addDetour(MultiPointer place, MultiPointer retAddr, MultiPointer detour, std::string args)
+void SimpleDetours::HookHandler::addDetour(MultiPointer place, MultiPointer retAddr, MultiPointer detour, str args)
 {
 	stDetours->push(new Detour(place, retAddr, detour, args));
 }

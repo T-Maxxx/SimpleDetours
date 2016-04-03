@@ -4,37 +4,14 @@
 
 namespace SimpleDetours
 {	
-	enum Opcode
-	{
-		OP_PUSH_EAX = 0x50,
-		OP_PUSH_ECX = 0x51,
-		OP_PUSH_EDX = 0x52,
-		OP_PUSH_EBX = 0x53,
-		OP_PUSH_ESP = 0x54,
-		OP_PUSH_EBP = 0x55,
-		OP_PUSH_ESI = 0x56,
-		OP_PUSH_EDI = 0x57,
-		OP_PUSHAD = 0x60,
-		OP_POPAD = 0x61,
-		OP_PUSH_M32 = 0x68,
-		OP_NOP = 0x90,
-		OP_PUSHFD = 0x9C,
-		OP_POPFD = 0x9D,
-		OP_MOV_EAX_M32 = 0xB8,
-		OP_RET = 0xC3,
-		OP_CALL = 0xE8,
-		OP_JMP = 0xE9,
-		OP_CALL_EAX = 0xD0FF
-	};
-
 	class SIMPLEDETOURS_API Detour : public HookBase
 	{
 	public:
 		Detour();
-		Detour(MultiPointer address, MultiPointer returnAddress, MultiPointer hookAddress, std::string pushArguments);
+		Detour(MultiPointer address, MultiPointer returnAddress, MultiPointer hookAddress, str pushArguments);
 		~Detour();
 
-		void initialize(MultiPointer address, MultiPointer returnAddress, MultiPointer hookAddress, std::string pushArguments);
+		void initialize(MultiPointer address, MultiPointer returnAddress, MultiPointer hookAddress, str pushArguments);
 		void setupHook();
 		void removeHook();
 		dword version();
@@ -47,7 +24,7 @@ namespace SimpleDetours
 		MultiPointer targetAddress;
 		MultiPointer detourCode;
 		dword detourCodeSize;
-		std::string arguments;
+		str arguments;
 
 		dword argsCountBytes(byte b);
 		void argsParse(byte* arr, dword count);

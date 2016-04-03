@@ -15,9 +15,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
+    <ClCompile Include="src\DllMain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\ByteHook.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -30,6 +30,9 @@
     <ClCompile Include="src\HookBase.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\HookHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\MemoryHook.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -39,11 +42,11 @@
     <ClCompile Include="src\WordHook.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\HookHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\AllHeaders.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="src\ByteHook.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -56,7 +59,13 @@
     <ClInclude Include="src\DwordHook.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Function.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="src\HookBase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\HookHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\MemoryHook.h">
@@ -65,10 +74,10 @@
     <ClInclude Include="src\MultiPointer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\WordHook.h">
+    <ClInclude Include="src\SimpleDetours.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\HookHandler.h">
+    <ClInclude Include="src\WordHook.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

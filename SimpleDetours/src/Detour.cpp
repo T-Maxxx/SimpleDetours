@@ -13,7 +13,7 @@ SimpleDetours::Detour::Detour()
 	arguments = "";
 }
 
-SimpleDetours::Detour::Detour(MultiPointer address, MultiPointer returnAddress, MultiPointer hookAddress, std::string pushArguments) : Detour()
+SimpleDetours::Detour::Detour(MultiPointer address, MultiPointer returnAddress, MultiPointer hookAddress, str pushArguments) : Detour()
 {
 	initialize(address, returnAddress, hookAddress, pushArguments);
 	setupHook();
@@ -27,7 +27,7 @@ SimpleDetours::Detour::~Detour()
 	VirtualFree(detourCode.vp(), detourCodeSize, MEM_RELEASE);
 }
 
-void SimpleDetours::Detour::initialize(MultiPointer address, MultiPointer returnAddress, MultiPointer hookAddress, std::string pushArguments)
+void SimpleDetours::Detour::initialize(MultiPointer address, MultiPointer returnAddress, MultiPointer hookAddress, str pushArguments)
 {
 	if (isInitialized)
 		return;
@@ -114,14 +114,15 @@ dword SimpleDetours::Detour::version()
 
 dword SimpleDetours::Detour::argsCountBytes(byte b)
 {
+	std::string args = arguments;
 	dword result = 0;
 	dword start = 0;
-	dword end = arguments.find(b, 0);
+	dword end = args.find(b, 0);
 
 	while (end != string::npos) {
 		++result;
 		start = end;
-		end = arguments.find(b, start);
+		end = args.find(b, start);
 	}
 
 	return result;
@@ -129,21 +130,22 @@ dword SimpleDetours::Detour::argsCountBytes(byte b)
 
 void SimpleDetours::Detour::argsParse(byte* arr, dword count)
 {
+	std::string args = arguments;
 	if (count == 1)
 	{
-		arr[0] = getPushRegisterOpcodeForName(arguments);
+		arr[0] = getPushRegisterOpcodeForName(args);
 	}
 	else
 	{
 		dword idx = 0;
-		dword end = arguments.length();
-		dword start = arguments.rfind(',');
+		dword end = args.length();
+		dword start = args.rfind(',');
 		while (start != string::npos)
 		{
-			arr[idx] = getPushRegisterOpcodeForName(arguments.substr(start, end - start)); //TODO: test string
+			arr[idx] = getPushRegisterOpcodeForName(args.substr(start, end - start)); //TODO: test string
 			++idx;
 			end = start;
-			start = arguments.rfind(',', end);
+			start = args.rfind(',', end);
 		}
 
 		if (idx != count)
