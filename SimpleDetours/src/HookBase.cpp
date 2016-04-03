@@ -48,6 +48,13 @@ void SimpleDetours::HookBase::setMemory(MultiPointer to, MultiPointer from, dwor
 	protectAddress(to, size, oldFlags);
 }
 
+void SimpleDetours::HookBase::setBytes(MultiPointer to, dword count, byte b)
+{
+	dword oldFlags = protectAddress(to, count, PAGE_EXECUTE_READWRITE);
+	putBytes(to, count, b);
+	protectAddress(to, count, oldFlags);
+}
+
 inline SimpleDetours::byte SimpleDetours::HookBase::putByte(MultiPointer address, SimpleDetours::byte b)
 {
 	byte oldByte = *(address.bp());
@@ -70,4 +77,9 @@ inline dword SimpleDetours::HookBase::putDword(MultiPointer address, dword d)
 void SimpleDetours::HookBase::putMemory(MultiPointer to, MultiPointer from, dword size)
 {
 	memcpy_s(to.vp(), size, from.vp(), size);
+}
+
+void SimpleDetours::HookBase::putBytes(MultiPointer to, dword count, byte b)
+{
+	memset(to.vp(), b, count);
 }

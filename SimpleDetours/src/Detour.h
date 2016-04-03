@@ -1,5 +1,6 @@
 #pragma once
 #include "HookBase.h"
+#include "ArgumentsInfo.h"
 #include <string>
 
 namespace SimpleDetours
@@ -26,14 +27,11 @@ namespace SimpleDetours
 		dword detourCodeSize;
 		str arguments;
 
-		dword argsCountBytes(byte b);
-		void argsParse(byte* arr, dword count);
-		byte getPushRegisterOpcodeForName(std::string& name);
 		//Note: offset will be changed
-		static inline void  putOpcode_byte(MultiPointer address, dword &offset, byte b);
-		static inline void  putOpcode_word(MultiPointer address, dword &offset, word w);
-		static inline void putOpcode_dword(MultiPointer address, dword &offset, dword d);
-
+		static void  putOpcode_byte(MultiPointer address, dword &offset, byte b);
+		static void  putOpcode_word(MultiPointer address, dword &offset, word w);
+		static void putOpcode_dword(MultiPointer address, dword &offset, dword d);
+		static void putOpcode_memory(MultiPointer to, dword& offset, MultiPointer from, dword size);
 	};
 
 }

@@ -57,7 +57,7 @@ namespace SimpleDetours
 	}
 
 	template<typename R, typename ...A>
-	R Function<R, A...>::operator()(const A ...args)
+	R Function<R, A...>::operator()(A ...args)
 	{
 		return call(A...);
 	}

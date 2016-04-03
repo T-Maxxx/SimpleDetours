@@ -1,9 +1,11 @@
 #pragma once
-#define DETOUR_VERSION 1
-#define MEMORYHOOK_VERSION 1
-#define BYTEHOOK_VERSION 1
-#define WORDHOOK_VERSION 1
-#define DWORDHOOK_VERSION 1
+#define DETOUR_VERSION (1)
+#define MEMORYHOOK_VERSION (1)
+#define BYTEHOOK_VERSION (1)
+#define WORDHOOK_VERSION (1)
+#define DWORDHOOK_VERSION (1)
+#define JUMPHOOK_VERSION (1)
+#define CALLHOOK_VERSION (1)
 
 #ifdef SIMPLEDETOURS_RUNTIME
 #define SIMPLEDETOURS_API _declspec(dllimport)
@@ -32,6 +34,18 @@ namespace SimpleDetours
 		OP_PUSHAD = 0x60,
 		OP_POPAD = 0x61,
 		OP_PUSH_M32 = 0x68,
+
+		OP_ADD_R32_M32 = 0x81,
+		OP_ADD_R32_EAX = 0xC0,
+		OP_ADD_R32_ECX = 0xC1,
+		OP_ADD_R32_EDX = 0xC2,
+		OP_ADD_R32_EBX = 0xC3,
+		OP_ADD_R32_ESP = 0xC4,
+		OP_ADD_R32_EBP = 0xC5,
+		OP_ADD_R32_ESI = 0xC6,
+		OP_ADD_R32_EDI = 0xC7,
+
+
 		OP_NOP = 0x90,
 		OP_PUSHFD = 0x9C,
 		OP_POPFD = 0x9D,

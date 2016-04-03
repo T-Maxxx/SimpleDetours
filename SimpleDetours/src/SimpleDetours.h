@@ -5,3 +5,4 @@
 	//Use 'AllHeaders.h' direct instead
 #define SIMPLEDETOURS_RUNTIME
 #include "AllHeaders.h"
+#include "HookHandler.h"
