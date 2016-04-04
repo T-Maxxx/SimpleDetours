@@ -10,8 +10,6 @@ SimpleDetours::HookHandler::HookHandler()
 	stDwordHooks = new stack<DwordHook*>();
 	stMemoryHooks = new stack<MemoryHook*>();
 	stDetours = new stack<Detour*>();
-	stJumpHooks = new stack<JumpHook*>();
-	stCallHooks = new stack<CallHook*>();
 }
 
 SimpleDetours::HookHandler::~HookHandler()
@@ -50,25 +48,11 @@ SimpleDetours::HookHandler::~HookHandler()
 		stDetours->pop();
 	}
 	delete stDetours;
-
-	while (!stJumpHooks->empty())
-	{
-		delete stJumpHooks->top();
-		stJumpHooks->pop();
-	}
-	delete stJumpHooks;
-
-	while (!stCallHooks->empty())
-	{
-		delete stCallHooks->top();
-		stCallHooks->pop();
-	}
-	delete stCallHooks;
 }
 
 void SimpleDetours::HookHandler::addByteHook(MultiPointer place, byte b)
 {
-	stByteHooks->push(new ByteHook(place, b));
+//	stByteHooks->push(new ByteHook(place, b));
 }
 
 void SimpleDetours::HookHandler::addWordHook(MultiPointer place, word w)
@@ -89,14 +73,4 @@ void SimpleDetours::HookHandler::addMemoryHook(MultiPointer place, MultiPointer 
 void SimpleDetours::HookHandler::addDetour(MultiPointer place, MultiPointer retAddr, MultiPointer detour, str args)
 {
 	stDetours->push(new Detour(place, retAddr, detour, args));
-}
-
-void SimpleDetours::HookHandler::addJumpHook(MultiPointer place, MultiPointer target)
-{
-	stJumpHooks->push(new JumpHook(place, target));
-}
-
-void SimpleDetours::HookHandler::addCallHook(MultiPointer place, MultiPointer target)
-{
-	stCallHooks->push(new CallHook(place, target));
 }

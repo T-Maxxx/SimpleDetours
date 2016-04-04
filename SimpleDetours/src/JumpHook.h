@@ -1,5 +1,7 @@
 #include "HookBase.h"
-
+//TODO: add this to handler, fill up .cpp
+//TODO: CallHook
+//TODO: add CallHook to handler
 namespace SimpleDetours
 {
 	class SIMPLEDETOURS_API JumpHook : public HookBase
@@ -16,6 +18,6 @@ namespace SimpleDetours
 	private:
 		MultiPointer place;
 		MultiPointer target;
-		byte originalCode[5];
+		MultiPointer originalCode;
 	};
 }

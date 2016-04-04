@@ -23,8 +23,6 @@ namespace SimpleDetours
 		char*   s();
 
 		MultiPointer operator+(const dword& rv);
-		MultiPointer operator+(MultiPointer& rv);
-		MultiPointer operator-(const dword& rv);
 		MultiPointer operator-(MultiPointer& rv);
 
 	private:

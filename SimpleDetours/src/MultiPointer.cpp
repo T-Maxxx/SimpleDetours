@@ -71,11 +71,6 @@ char* SimpleDetours::MultiPointer::s()
 	return reinterpret_cast<char*>(pointer);
 }
 
-SimpleDetours::MultiPointer SimpleDetours::MultiPointer::operator-(const dword& rv)
-{
-	return MultiPointer(d() - rv);
-}
-
 SimpleDetours::MultiPointer SimpleDetours::MultiPointer::operator-(MultiPointer& rv)
 {
 	return MultiPointer(pointer - rv.d());
@@ -84,9 +79,4 @@ SimpleDetours::MultiPointer SimpleDetours::MultiPointer::operator-(MultiPointer&
 SimpleDetours::MultiPointer SimpleDetours::MultiPointer::operator+(const dword& rv)
 {
 	return MultiPointer(d() + rv);
-}
-
-SimpleDetours::MultiPointer SimpleDetours::MultiPointer::operator+(MultiPointer& rv)
-{
-	return MultiPointer(pointer + rv.d());
 }
