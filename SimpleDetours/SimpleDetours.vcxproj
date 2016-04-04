@@ -146,6 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\CallHook.cpp" />
     <ClCompile Include="src\JumpHook.cpp" />
     <ClCompile Include="src\ArgumentsInfo.cpp" />
     <ClCompile Include="src\ByteHook.cpp" />
@@ -159,6 +160,7 @@
     <ClCompile Include="src\WordHook.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\CallHook.h" />
     <ClInclude Include="src\JumpHook.h" />
     <ClInclude Include="src\ArgumentsInfo.h" />
     <ClInclude Include="src\AllHeaders.h" />

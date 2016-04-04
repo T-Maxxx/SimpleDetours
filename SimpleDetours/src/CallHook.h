@@ -3,12 +3,12 @@
 
 namespace SimpleDetours
 {
-	class SIMPLEDETOURS_API JumpHook : public HookBase
+	class SIMPLEDETOURS_API CallHook : public HookBase
 	{
 	public:
-		JumpHook();
-		JumpHook(MultiPointer from, MultiPointer to);
-		~JumpHook();
+		CallHook();
+		CallHook(MultiPointer from, MultiPointer to);
+		~CallHook();
 
 		void initialize(MultiPointer from, MultiPointer to);
 		void setupHook();
