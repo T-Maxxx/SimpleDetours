@@ -16,6 +16,8 @@ namespace SimpleDetours
 		void addDwordHook(MultiPointer place, dword d);
 		void addMemoryHook(MultiPointer place, MultiPointer memory, dword memSize);
 		void addDetour(MultiPointer place, MultiPointer retAddr, MultiPointer detour, str args);
+		void addJumpHook(MultiPointer place, MultiPointer target);
+		void addCallHook(MultiPointer place, MultiPointer target);
 
 	private:
 		std::stack<ByteHook*>*   stByteHooks;
@@ -23,5 +25,7 @@ namespace SimpleDetours
 		std::stack<DwordHook*>*  stDwordHooks;
 		std::stack<MemoryHook*>* stMemoryHooks;
 		std::stack<Detour*>*     stDetours;
+		std::stack<JumpHook*>*   stJumpHooks;
+		std::stack<CallHook*>*   stCallHooks;
 	};
 }

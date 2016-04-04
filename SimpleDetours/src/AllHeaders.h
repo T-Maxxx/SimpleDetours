@@ -6,3 +6,5 @@
 #include "MemoryHook.h"
 #include "Detour.h"
 #include "Function.h"
+#include "JumpHook.h"
+#include "CallHook.h"
