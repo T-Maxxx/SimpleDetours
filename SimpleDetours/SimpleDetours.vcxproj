@@ -148,7 +148,7 @@
   <ItemGroup>
     <ClCompile Include="src\CallHook.cpp" />
     <ClCompile Include="src\JumpHook.cpp" />
-    <ClCompile Include="src\ArgumentsInfo.cpp" />
+    <ClCompile Include="src\ArgInfo.cpp" />
     <ClCompile Include="src\ByteHook.cpp" />
     <ClCompile Include="src\Detour.cpp" />
     <ClCompile Include="src\DllMain.cpp" />
@@ -162,7 +162,7 @@
   <ItemGroup>
     <ClInclude Include="src\CallHook.h" />
     <ClInclude Include="src\JumpHook.h" />
-    <ClInclude Include="src\ArgumentsInfo.h" />
+    <ClInclude Include="src\ArgInfo.h" />
     <ClInclude Include="src\AllHeaders.h" />
     <ClInclude Include="src\ByteHook.h" />
     <ClInclude Include="src\Declarations.h" />

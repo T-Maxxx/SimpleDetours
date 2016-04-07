@@ -42,13 +42,13 @@
     <ClCompile Include="src\WordHook.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ArgumentsInfo.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\JumpHook.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\CallHook.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ArgInfo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -89,13 +89,13 @@
     <ClInclude Include="src\WordHook.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ArgumentsInfo.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\JumpHook.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\CallHook.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ArgInfo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
