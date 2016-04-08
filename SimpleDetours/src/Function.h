@@ -1,9 +1,9 @@
 #pragma once
 #include "MultiPointer.h"
-#include "ArgInfo.h"
+#include "ArgsInfo.h"
 
 #define VariadicFunction( name, address, returnType, ... ) \
-	{returnType(*name)(__VA_ARGS__, ...) = (returnType(*)(__VA_ARGS__, ...))address}
+	{returnType(*name)(__VA_ARGS__, ...) = (returnType(*)(__VA_ARGS__, ...))address;}
 
 namespace SimpleDetours
 {
@@ -12,57 +12,67 @@ namespace SimpleDetours
 	{
 	public:
 		Function();
-		Function(MultiPointer address, str argumentsInfo);
+		Function(MultiPointer address, ArgumentStoringType retRegister, str argsStr);
 		~Function();
 		
-		void initialize(MultiPointer address, str argumentsInfo);
-		R call(A... args);
+		void initialize(MultiPointer address, ArgumentStoringType retRegister, str argsStr);
 		R operator()(A... args);
 	private:
 		MultiPointer function;
 		MultiPointer rawCode;
 		dword rawCodeSize;
-		ArgsInfo args;
+		str args;
+		byte retReg;
+		R callResult;
+		bool isInitialized;
 	};
 
 	template<typename R, typename ... A>
 	Function<R, A...>::Function()
 	{
-	/*	function = NULL;
+		function = NULL;
 		rawCode = NULL;
 		rawCodeSize = 0;
-		isInitialized = false;*/
+		args = NULL;
+		byte retReg = AST_ERROR;
+		isInitialized = false;
 	}
 
 	template<typename R, typename ... A>
-	Function<R, A...>::Function(MultiPointer address, int argumentsInfo) : Function()
+	Function<R, A...>::Function(MultiPointer address, ArgumentStoringType retRegister, str argsStr) : Function()
 	{
-	//	initialize(address);
+		initialize(address, retRegister, argumentsInfo);
 	}
 
 	template<typename R, typename ... A>
 	Function<R, A...>::~Function()
 	{
-	/*	if (rawCode)
-			VirtualFree(rawCode.vp(), rawCodeSize, MEM_RELEASE);*/
+		if(rawCodeSize)
+			VirtualFree(rawCode.vp, rawCodeSize, MEM_RELEASE); //TODO: check flag
 	}
 
 	template<typename R, typename ...A>
-	void Function<R, A...>::initialize(MultiPointer address)
+	void Function<R, A...>::initialize(MultiPointer address, ArgumentStoringType retRegister, str argsStr);
 	{
-	/*	function = address;
-		isInitialized = true;*/
+		function = address;
+		args = argsStr;
+		retReg = retRegister == AST_STACK ? AST_ERROR : retRegister;
+		isInitialized = true;
 	}
 
 	template<typename R, typename ...A>
-	R Function<R, A...>::call(A ...args)
+	R Function<R, A...>::operator()(A ...varargs)
 	{
-	//	return function(A...);
-	}
-
-	template<typename R, typename ...A>
-	R Function<R, A...>::operator()(A ...args)
-	{
-	//	return call(A...);
+		ArgsInfo a(args);
+		//push anything + call function + add esp if pushed + push result + push retaddr and ret
+		//rawCodeSize = 
+		//TODO
+		_asm
+		{ 
+			call rawCode;
+			///???
+		}
+		
+		return callResult;
 	}
 }

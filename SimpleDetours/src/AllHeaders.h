@@ -8,3 +8,5 @@
 #include "Function.h"
 #include "JumpHook.h"
 #include "CallHook.h"
+#include "GlobalVariable.hpp"
+#include "NopHook.hpp"
