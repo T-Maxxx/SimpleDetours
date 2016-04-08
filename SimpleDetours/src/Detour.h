@@ -25,13 +25,16 @@ namespace SimpleDetours
 		MultiPointer targetAddress;
 		MultiPointer detourCode;
 		dword detourCodeSize;
-		str arguments;
 
 		//Note: offset will be changed
 		static void  putOpcode_byte(MultiPointer address, dword &offset, byte b);
 		static void  putOpcode_word(MultiPointer address, dword &offset, word w);
 		static void putOpcode_dword(MultiPointer address, dword &offset, dword d);
 		static void putOpcode_memory(MultiPointer to, dword& offset, MultiPointer from, dword size);
+		static dword getPushArgumentsRawCodeSize(ArgsInfo& argsInfo);
+		static dword getPushRawCode(ArgsInfo argsInfo, dword index, byte* buff, dword* buffSize);
+		static byte getAddRegisterForAST(byte ast);
+		static byte getPushRegisterForAST(byte ast);
 	};
 
 }

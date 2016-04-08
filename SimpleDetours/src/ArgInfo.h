@@ -18,7 +18,7 @@ namespace SimpleDetours
 		AST_ERROR
 	};
 	
-	class SIMPLEDETOURS_API ArgsInfo
+	class ArgsInfo
 	{
 	public:
 		ArgsInfo();

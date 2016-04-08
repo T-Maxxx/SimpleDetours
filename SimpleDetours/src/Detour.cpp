@@ -39,17 +39,15 @@ void SimpleDetours::Detour::initialize(MultiPointer address, MultiPointer return
 	retAddr = returnAddress;
 	originalBytesSize = (retAddr - place).d();
 	targetAddress = hookAddress;
-	arguments = pushArguments;
-	ArgumentsInfo argumentsInfo;
+	ArgsInfo argsInfo(pushArguments);
 
 	originalBytes = new byte[originalBytesSize]();
 	putMemory(originalBytes, place, originalBytesSize);
 
-	argumentsInfo.parse(arguments);
-	dword argumentsTotalSize = argumentsInfo.getTotalSize();
-	dword argumentsCount = argumentsInfo.getArgumentsCount();
+	dword argumentsTotalSize = getPushArgumentsRawCodeSize(&argsInfo);
+	dword argumentsCount = argsInfo.getArgumentsCount();
 
-	//detourCodeSize = opcodes + push arguments size + original bytes count + (0 or 6)
+	//detourCodeSize = opcodes + push arguments size + original bytes count + esp cleanup(0 or 6)
 	detourCodeSize = 17 + argumentsTotalSize + originalBytesSize + (argumentsTotalSize ? 6 : 0);
 	detourCode = VirtualAlloc(NULL, detourCodeSize, MEM_COMMIT, PAGE_EXECUTE_READWRITE); //TODO: check flags
 
@@ -57,8 +55,12 @@ void SimpleDetours::Detour::initialize(MultiPointer address, MultiPointer return
 
 	putOpcode_byte(detourCode, j, OP_PUSHAD);                              // pushad
 	putOpcode_byte(detourCode, j, OP_PUSHFD);                              // pushfd
-	for (dword i = 0; i < argumentsCount; ++i)                             // [push <REGISTERS>]
-		putOpcode_memory(detourCode, j, argumentsInfo.getRawCode(i), argumentsInfo.getRawCodeSize(i));
+	for (dword i = argumentsCount - 1; i >= 0; --i) {                      // [push <REGISTERS>]
+		byte buffer[7];
+		dword actualBuffSize = 0;
+		getPushRawCode(&argsInfo, i, buffer, &actualBuffSize);
+		putOpcode_memory(detourCode, j, buffer, actualBuffSize);
+	}
 	putOpcode_byte(detourCode, j, OP_MOV_EAX_M32);                         // mov eax, 
 	putOpcode_dword(detourCode, j, targetAddress.d());                     //          hookAddress
 	putOpcode_word(detourCode, j, OP_CALL_EAX);                            // call eax
@@ -134,4 +136,96 @@ void SimpleDetours::Detour::putOpcode_memory(MultiPointer to, dword & offset, Mu
 {
 	putMemory(to.d() + offset, from, size);
 	offset += size;
+}
+
+void SimpleDetours::Detour::getPushArgumentsRawCodeSize(ArgsInfo& argsInfo)
+{
+	dword result = 0;
+	dword argsCount = argsInfo->getArgumentsCount();
+	for(dword i = 0; i < argsCount; ++i)
+	{
+		byte ast = argsInfo[i].storingType;
+		if(ast == AST_STACK)
+			;///
+		else if(ast >= AST_REG_EAX && ast <= AST_REG_ESI)
+		{
+			if(argsInfo[i].regOffset)
+				result += 7;
+			else
+				retult += 1;
+		}
+		else
+		{
+			//TODO: error: AST_ERROR
+		}
+	}
+	return result;
+}
+
+void SimpleDetours::Detour::getPushRawCode(ArgsInfo* argsInfo, dword index, byte* buff, dword* buffSize)
+{
+	if(index < 0 || index > argsInfo->getArgumentsCount())
+		return; //TODO: error
+	int j = 0;
+	if(argsInfo[index].regOffset)
+	{
+		putOpcode_byte(buff, j, OP_ADD_R32_M32);s
+		putOpcode_byte(buff, j, getAddRegisterForAST(argsInfo[index].storingType));
+		putOpcode_dword(buff, j, argsInfo[index].regOffset);
+		putOpcode_byte(buff, j, getPushRegisterForAST(argsInfo[index].storingType));s
+	}
+	else
+		putOpcode_byte(buff, j, getPushRegisterForAST(argsInfo[index].storingType));
+		
+	*buffSize = j;
+}
+
+byte SimpleDetours::Detour::getAddRegisterForAST(byte ast)
+{
+	if(ast == AST_STACK)
+		return OP_NOP; //TODO: add error.
+		
+	if(ast == AST_REG_EAX)
+		return OP_ADD_R32_EAX;
+	else if (ast == AST_REG_ECX)
+		return OP_ADD_R32_ECX;
+	else if (ast == AST_REG_EDX)
+		return OP_ADD_R32_EDX;
+	else if (ast == AST_REG_EBX)
+		return OP_ADD_R32_EBX;
+	else if (ast == AST_REG_ESP)
+		return OP_ADD_R32_ESP;
+	else if (ast == AST_REG_EBP)
+		return OP_ADD_R32_EBP;
+	else if (ast == AST_REG_ESI)
+		return OP_ADD_R32_ESI;
+	else if (ast == AST_REG_EDI)
+		return OP_ADD_R32_EDI;
+		
+	return OP_NOP;
+}
+
+byte SimpleDetours::Detour::getPushRegisterForAST(byte ast)
+{
+	if(ast == AST_STACK)
+		return OP_NOP; //TODO: error
+	
+	if(ast == AST_REG_EAX)
+		return OP_PUSH_EAX;
+	else if (ast == AST_REG_ECX)
+		return OP_PUSH_ECX;
+	else if (ast == AST_REG_EDX)
+		return OP_PUSH_EDX;
+	else if (ast == AST_REG_EBX)
+		return OP_PUSH_EBX;
+	else if (ast == AST_REG_ESP)
+		return OP_PUSH_ESP;
+	else if (ast == AST_REG_EBP)
+		return OP_PUSH_EBP;
+	else if (ast == AST_REG_ESI)
+		return OP_PUSH_ESI;
+	else if (ast == AST_REG_EDI)
+		return OP_PUSH_EDI;
+		
+	return OP_NOP;
 }

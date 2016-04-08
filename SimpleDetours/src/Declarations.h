@@ -13,6 +13,11 @@
 #define SIMPLEDETOURS_API _declspec(dllexport)
 #endif
 
+#ifdef SIMPLEDETOURS_PURECODE
+#undef SIMPLEDETOURS_API
+#define SIMPLEDETOURS_API
+#endif
+
 namespace SimpleDetours
 {
 	typedef unsigned char      byte;
